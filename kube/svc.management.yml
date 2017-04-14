@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: rabbitmq-management
+spec:
+  type: LoadBalancer
+  selector:
+    app: rabbitmq
+  ports:
+    - name: management-console
+      port: 15672

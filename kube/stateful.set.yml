@@ -1,0 +1,50 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: rabbitmq
+spec:
+  serviceName: rmq-cluster
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: rabbitmq
+        image: gcr.io/{{PROJECT-ID}}/rabbitmq:{{COMMIT}}
+        ports:
+          - name: queue-port
+            containerPort: 5672
+          - name: management-port
+            containerPort: 15672
+          - name: cluster-port
+            containerPort: 4369
+          - name: dist-port
+            containerPort: 25672
+        env: 
+          - name: RABBITMQ_DEFAULT_USER
+            value: rmq-mgmt
+          - name: RABBITMQ_DEFAULT_PASS
+            value: 7Nxm2QXP6PXCQqVtzRWXwdfg0r1CpWu0
+          - name: RABBITMQ_ERLANG_COOKIE
+            value: jbsfd2mt43iUFZlUToMAGPbUw6KKyMYq
+          - name: RABBITMQ_USE_LONGNAME
+            value: "true"
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: RABBITMQ_NODENAME
+            value: rabbit@$(NODE_NAME).rmq-cluster
+  volumeClaimTemplates:
+  - metadata:
+      name: rabbitmq
+      annotations:
+        volume.beta.kubernetes.io/storage-class: "standard"
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 10Gi

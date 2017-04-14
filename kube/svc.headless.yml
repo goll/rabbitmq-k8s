@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: rmq-cluster
+  labels:
+    app: rabbitmq
+spec:
+  clusterIP: None
+  selector:
+    app: rabbitmq
+  ports:
+    - name: queue-port
+      port: 5672
+    - name: cluster-port
+      port: 4369
+    - name: dist-port
+      port: 25672
