@@ -28,7 +28,7 @@ $ gcloud docker --project=${PROJECT_ID} -- push gcr.io/${PROJECT_ID}/rabbitmq:$(
 $ gcloud container clusters list --project=${PROJECT_ID}
 
 # Create cluster if it doesn't exist:
-$ gcloud container clusters create rabbitmq-staging-cluster --num-nodes=2 --zone=europe-west1-c --project=${PROJECT_ID}
+$ gcloud container clusters create rabbitmq-staging-cluster --num-nodes=1 --machine-type=n1-standard-1 --zone=europe-west1-c --project=${PROJECT_ID}
 
 # Get cluster credentials
 $ gcloud container clusters get-credentials rabbitmq-staging-cluster --zone=europe-west1-c --project=${PROJECT_ID}
@@ -42,7 +42,7 @@ $ ./setup-staging.sh
 $ gcloud container clusters list --project=${PROJECT_ID}
 
 # Create cluster if it doesn't exist:
-$ gcloud container clusters create rabbitmq-production-cluster --num-nodes=3 --zone=europe-west1-b --project=${PROJECT_ID}
+$ gcloud container clusters create rabbitmq-production-cluster --num-nodes=1 --machine-type=n1-standard-2 --zone=europe-west1-b --project=${PROJECT_ID}
 
 # Get cluster credentials
 $ gcloud container clusters get-credentials rabbitmq-production-cluster --zone=europe-west1-b --project=${PROJECT_ID}
