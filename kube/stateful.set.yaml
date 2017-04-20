@@ -38,6 +38,9 @@ spec:
                 fieldPath: metadata.name
           - name: RABBITMQ_NODENAME
             value: rabbit@$(NODE_NAME).rmq-cluster
+        volumeMounts:
+        - name: rabbitmq
+          mountPath: /var/lib/rabbitmq
   volumeClaimTemplates:
   - metadata:
       name: rabbitmq
