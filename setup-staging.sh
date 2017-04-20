@@ -3,11 +3,11 @@ RABBITMQ_STAGING_USER="rmq-stage"
 RABBITMQ_STAGING_PASS="VRi6WJsOC1opoyQBNz1jr6mQucmb1RMV"
 
 kubectl get ns rmq-staging || kubectl create ns rmq-staging
-kubectl get svc -n rmq-staging rabbitmq || kubectl create -n rmq-staging -f kube/svc.yml
-kubectl get svc -n rmq-staging rmq-cluster || kubectl create -n rmq-staging -f kube/svc.headless.yml
-kubectl get svc -n rmq-staging rabbitmq-management || kubectl create -n rmq-staging -f kube/svc.management.yml
-kubectl get storageclass -n rmq-staging standard || kubectl create -n rmq-staging -f kube/standard-storageclass.yaml
-kubectl apply -n rmq-staging -f kube/stateful.set.staging.yml
+kubectl get svc -n rmq-staging rabbitmq || kubectl create -n rmq-staging -f kube/svc.yaml
+kubectl get svc -n rmq-staging rmq-cluster || kubectl create -n rmq-staging -f kube/svc.headless.yaml
+kubectl get svc -n rmq-staging rabbitmq-management || kubectl create -n rmq-staging -f kube/svc.management.yaml
+kubectl get storageclass -n rmq-staging standard || kubectl create -n rmq-staging -f kube/storageclass.standard.yaml
+kubectl apply -n rmq-staging -f kube/stateful.set.staging.yaml
 sleep 75
 
 while true ; do 

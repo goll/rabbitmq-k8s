@@ -5,8 +5,8 @@ RabbitMQ cluster using Kubernetes >=1.5 on [GKE](https://cloud.google.com/contai
 * Clone the repo and configure your container images:
 ```
 $ git clone https://github.com/goll/rabbitmq-k8s.git && cd rabbitmq-k8s/
-$ sed -i -e 's/{{PROJECT-ID}}/staging-project-id/' -e "s/{{COMMIT}}/$(git log -1 --pretty=%h)/" kube/stateful.set.staging.yml
-$ sed -i -e 's/{{PROJECT-ID}}/production-project-id/' -e "s/{{COMMIT}}/$(git log -1 --pretty=%h)/" kube/stateful.set.yml
+$ sed -i -e 's/{{PROJECT-ID}}/staging-project-id/' -e "s/{{COMMIT}}/$(git log -1 --pretty=%h)/" kube/stateful.set.staging.yaml
+$ sed -i -e 's/{{PROJECT-ID}}/production-project-id/' -e "s/{{COMMIT}}/$(git log -1 --pretty=%h)/" kube/stateful.set.yaml
 ```
 
 * Define the project for gcloud commands:
@@ -28,10 +28,10 @@ $ gcloud docker --project=${PROJECT_ID} -- push gcr.io/${PROJECT_ID}/rabbitmq:$(
 $ gcloud container clusters list --project=${PROJECT_ID}
 
 # Create cluster if it doesn't exist:
-$ gcloud container clusters create rabbitmq-staging-cluster --num-nodes=1 --machine-type=n1-standard-1 --zone=europe-west1-c --project=${PROJECT_ID}
+$ gcloud container clusters create rabbitmq-staging-cluster --num-nodes=1 --machine-type=n1-standard-1 --zone=europe-west1-b --project=${PROJECT_ID}
 
 # Get cluster credentials
-$ gcloud container clusters get-credentials rabbitmq-staging-cluster --zone=europe-west1-c --project=${PROJECT_ID}
+$ gcloud container clusters get-credentials rabbitmq-staging-cluster --zone=europe-west1-b --project=${PROJECT_ID}
 
 $ ./setup-staging.sh
 ```
@@ -42,10 +42,10 @@ $ ./setup-staging.sh
 $ gcloud container clusters list --project=${PROJECT_ID}
 
 # Create cluster if it doesn't exist:
-$ gcloud container clusters create rabbitmq-production-cluster --num-nodes=1 --machine-type=n1-standard-2 --zone=europe-west1-b --project=${PROJECT_ID}
+$ gcloud container clusters create rabbitmq-production-cluster --num-nodes=1 --machine-type=n1-standard-2 --zone=europe-west1-d --additional-zones=europe-west1-c --project=${PROJECT_ID}
 
 # Get cluster credentials
-$ gcloud container clusters get-credentials rabbitmq-production-cluster --zone=europe-west1-b --project=${PROJECT_ID}
+$ gcloud container clusters get-credentials rabbitmq-production-cluster --zone=europe-west1-d --project=${PROJECT_ID}
 
 $ ./setup-production.sh
 ```
@@ -53,11 +53,11 @@ $ ./setup-production.sh
 * Delete staging:
 ```
 $ kubectl get ns rmq-staging && kubectl delete ns rmq-staging
-$ gcloud container clusters delete rabbitmq-staging-cluster --zone=europe-west1-c --project=${PROJECT_ID}
+$ gcloud container clusters delete rabbitmq-staging-cluster --zone=europe-west1-b --project=${PROJECT_ID}
 ```
 
 * Delete production:
 ```
 $ kubectl get ns rmq && kubectl delete ns rmq
-$ gcloud container clusters delete rabbitmq-production-cluster --zone=europe-west1-b --project=${PROJECT_ID}
+$ gcloud container clusters delete rabbitmq-production-cluster --zone=europe-west1-d --project=${PROJECT_ID}
 ```

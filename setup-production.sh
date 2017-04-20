@@ -3,11 +3,11 @@ RABBITMQ_USER="rmq-prod"
 RABBITMQ_PASS="9xaQJIWMK3llq0LVZ4OqQUS0Mv5cTFZs"
 
 kubectl get ns rmq || kubectl create ns rmq
-kubectl get svc -n rmq rabbitmq || kubectl create -n rmq -f kube/svc.yml
-kubectl get svc -n rmq rmq-cluster || kubectl create -n rmq -f kube/svc.headless.yml
-kubectl get svc -n rmq rabbitmq-management || kubectl create -n rmq -f kube/svc.management.yml
-kubectl get storageclass -n rmq standard || kubectl create -n rmq -f kube/standard-storageclass.yaml
-kubectl apply -n rmq -f kube/stateful.set.yml
+kubectl get svc -n rmq rabbitmq || kubectl create -n rmq -f kube/svc.yaml
+kubectl get svc -n rmq rmq-cluster || kubectl create -n rmq -f kube/svc.headless.yaml
+kubectl get svc -n rmq rabbitmq-management || kubectl create -n rmq -f kube/svc.management.yaml
+kubectl get storageclass -n rmq standard || kubectl create -n rmq -f kube/storageclass.standard.yaml
+kubectl apply -n rmq -f kube/stateful.set.yaml
 sleep 75
 
 while true ; do 
