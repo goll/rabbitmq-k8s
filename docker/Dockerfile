@@ -1,4 +1,4 @@
-FROM rabbitmq:3.6.9-management-alpine
+FROM rabbitmq:3.6.10-management-alpine
 
 ENV RABBITMQ_BOOT_MODULE="rabbit_clusterer" \
     RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS="-pa /plugins/rabbitmq_clusterer-1.0.3.ez/rabbitmq_clusterer-1.0.3/ebin"
