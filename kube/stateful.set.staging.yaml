@@ -44,10 +44,9 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: rabbitmq
-      annotations:
-        volume.beta.kubernetes.io/storage-class: "standard"
     spec:
       accessModes: ["ReadWriteOnce"]
+      storageClassName: standard
       resources:
         requests:
           storage: 10Gi
