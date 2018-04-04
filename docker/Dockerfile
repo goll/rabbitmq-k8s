@@ -1,12 +1,6 @@
-FROM rabbitmq:3.6.12-management-alpine
+FROM rabbitmq:3.7.4-management-alpine
 
-ENV RABBITMQ_BOOT_MODULE="rabbit_clusterer" \
-    RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS="-pa /plugins/rabbitmq_clusterer-1.0.3.ez/rabbitmq_clusterer-1.0.3/ebin"
+COPY files/rabbitmq.conf /etc/rabbitmq/
 
-COPY files/docker-entrypoint.sh /usr/local/bin/
-COPY files/clusterer.config /etc/rabbitmq/
-COPY files/*.ez /plugins/
-
-RUN rabbitmq-plugins enable rabbitmq_delayed_message_exchange --offline \
- && rabbitmq-plugins enable rabbitmq_clusterer --offline \
- && chown -R rabbitmq:rabbitmq /var/lib/rabbitmq /etc/rabbitmq
+RUN chown rabbitmq:rabbitmq /etc/rabbitmq/rabbitmq.conf \
+ && rabbitmq-plugins --offline enable rabbitmq_peer_discovery_k8s

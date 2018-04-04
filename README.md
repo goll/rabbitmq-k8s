@@ -1,5 +1,5 @@
 # rabbitmq-k8s
-RabbitMQ cluster using Kubernetes >=1.5 on [GKE](https://cloud.google.com/container-engine/)
+RabbitMQ >=3.7 cluster using Kubernetes >=1.5 on [GKE](https://cloud.google.com/kubernetes-engine/)
 
 * Replace `staging-project-id` and `production-project-id` with your projects in the next steps.
 * Clone the repo and configure your container images:
@@ -32,6 +32,7 @@ $ gcloud container clusters create rabbitmq-staging-cluster --num-nodes=1 --mach
 
 # Get cluster credentials
 $ gcloud container clusters get-credentials rabbitmq-staging-cluster --zone=europe-west1-b --project=${PROJECT_ID}
+$ kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user $(gcloud config get-value account)
 
 $ ./setup-staging.sh
 ```
@@ -42,10 +43,11 @@ $ ./setup-staging.sh
 $ gcloud container clusters list --project=${PROJECT_ID}
 
 # Create cluster if it doesn't exist:
-$ gcloud container clusters create rabbitmq-production-cluster --num-nodes=1 --machine-type=n1-standard-1 --zone=europe-west1-d --additional-zones=europe-west1-b,europe-west1-c --project=${PROJECT_ID}
+$ gcloud container clusters create rabbitmq-production-cluster --num-nodes=1 --machine-type=n1-standard-1 --zone=europe-west1-b --additional-zones=europe-west1-c,europe-west1-d --project=${PROJECT_ID}
 
 # Get cluster credentials
-$ gcloud container clusters get-credentials rabbitmq-production-cluster --zone=europe-west1-d --project=${PROJECT_ID}
+$ gcloud container clusters get-credentials rabbitmq-production-cluster --zone=europe-west1-b --project=${PROJECT_ID}
+$ kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user $(gcloud config get-value account)
 
 $ ./setup-production.sh
 ```
@@ -59,5 +61,5 @@ $ gcloud container clusters delete rabbitmq-staging-cluster --zone=europe-west1-
 * Delete production:
 ```
 $ kubectl get ns rmq && kubectl delete ns rmq
-$ gcloud container clusters delete rabbitmq-production-cluster --zone=europe-west1-d --project=${PROJECT_ID}
+$ gcloud container clusters delete rabbitmq-production-cluster --zone=europe-west1-b --project=${PROJECT_ID}
 ```

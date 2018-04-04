@@ -7,5 +7,5 @@ spec:
   selector:
     app: rabbitmq
   ports:
-    - name: management-console
-      port: 15672
+  - name: management-console
+    port: 15672

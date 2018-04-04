@@ -7,8 +7,9 @@ kubectl get svc -n rmq rabbitmq || kubectl create -n rmq -f kube/svc.yaml
 kubectl get svc -n rmq rmq-cluster || kubectl create -n rmq -f kube/svc.headless.yaml
 kubectl get svc -n rmq rabbitmq-management || kubectl create -n rmq -f kube/svc.management.yaml
 kubectl get storageclass -n rmq standard || kubectl create -n rmq -f kube/storageclass.standard.yaml
-kubectl apply -n rmq -f kube/stateful.set.yaml
-sleep 75
+kubectl get sa -n rmq rabbitmq || kubectl create -n rmq -f kube/rbac.yaml
+kubectl get statefulset -n rmq rabbitmq || kubectl create -n rmq -f kube/stateful.set.yaml
+sleep 90
 
 while true ; do 
   echo "Waiting for RabbitMQ pod to be ready...."

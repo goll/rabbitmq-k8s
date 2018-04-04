@@ -9,9 +9,9 @@ spec:
   selector:
     app: rabbitmq
   ports:
-    - name: queue-port
-      port: 5672
-    - name: cluster-port
-      port: 4369
-    - name: dist-port
-      port: 25672
+  - name: queue-port
+    port: 5672
+  - name: cluster-port
+    port: 4369
+  - name: dist-port
+    port: 25672
