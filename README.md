@@ -18,8 +18,8 @@ $ export PROJECT_ID="production-project-id"
 
 * Build and upload a new image:
 ```
-$ docker build -t gcr.io/${PROJECT_ID}/rabbitmq:$(git log -1 --pretty=%h) docker/
-$ gcloud docker --project=${PROJECT_ID} -- push gcr.io/${PROJECT_ID}/rabbitmq:$(git log -1 --pretty=%h)
+$ docker build -t eu.gcr.io/${PROJECT_ID}/rabbitmq:$(git log -1 --pretty=%h) docker/
+$ gcloud docker --project=${PROJECT_ID} -- push eu.gcr.io/${PROJECT_ID}/rabbitmq:$(git log -1 --pretty=%h)
 ```
 
 * Deploy staging:
@@ -62,4 +62,10 @@ $ gcloud container clusters delete rabbitmq-staging-cluster --zone=europe-west1-
 ```
 $ kubectl get ns rmq && kubectl delete ns rmq
 $ gcloud container clusters delete rabbitmq-production-cluster --zone=europe-west1-b --project=${PROJECT_ID}
+```
+
+* Delete disks:
+```
+$ gcloud compute disks list --project=${PROJECT_ID}
+$ gcloud compute disks delete DISK_NAME --zone=ZONE --project=${PROJECT_ID}
 ```

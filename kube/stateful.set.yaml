@@ -17,7 +17,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: rabbitmq
-        image: gcr.io/{{PROJECT-ID}}/rabbitmq:{{COMMIT}}
+        image: eu.gcr.io/{{PROJECT-ID}}/rabbitmq:{{COMMIT}}
         ports:
         - name: queue-port
           containerPort: 5672

@@ -2,10 +2,12 @@ kind: Service
 apiVersion: v1
 metadata:
   name: rabbitmq
+  annotations:
+    cloud.google.com/load-balancer-type: "Internal"
   labels:
     app: rabbitmq
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: rabbitmq
   ports:
